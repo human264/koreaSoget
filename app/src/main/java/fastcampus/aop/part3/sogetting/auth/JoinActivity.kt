@@ -1,5 +1,6 @@
 package fastcampus.aop.part3.sogetting.auth
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -20,6 +21,7 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import fastcampus.aop.part3.sogetting.MainActivity
 import fastcampus.aop.part3.sogetting.R
 import fastcampus.aop.part3.sogetting.utils.FirebaseRef
 import kotlinx.android.synthetic.main.item_card.*
@@ -85,11 +87,8 @@ class JoinActivity : AppCompatActivity() {
                         )
 
                         uploadImage(uid)
-
-//
-//
-//                        val intent = Intent(this, MainActivity::class.java)
-//                        startActivity(intent)
+                        val intent = Intent(this, MainActivity::class.java)
+                       startActivity(intent)
 
 
                     } else {

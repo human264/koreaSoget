@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "721728099752",
+    "project_id": "sogetexx",
+    "storage_bucket": "sogetexx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721728099752:android:2414a65468e7c259c2799d",
+        "android_client_info": {
+          "package_name": "fastcampus.aop.part3.sogetting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721728099752-ihum1j2n8t1pvbq4qu6b1kkgsoe2nag9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2ONLAkl70c2gOP_IGvrzRMjOxc6v87rc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721728099752-ihum1j2n8t1pvbq4qu6b1kkgsoe2nag9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -13,11 +13,12 @@
 
         <ImageView
             android:id="@+id/profileImageArea"
-            android:src="@drawable/no"
+
             android:layout_width="match_parent"
             android:layout_height="300dp" />
 
         <TextView
+            android:id="@+id/itemNickName"
             android:text = "Name"
             android:layout_margin="5dp"
             android:textSize="30sp"
@@ -28,6 +29,7 @@
 
 
         <TextView
+            android:id="@+id/itemAge"
             android:text = "Age"
             android:layout_margin="5dp"
             android:textSize="30sp"
@@ -38,6 +40,7 @@
 
 
         <TextView
+            android:id="@+id/itemCity"
             android:text = "City"
             android:layout_margin="5dp"
             android:textSize="30sp"

@@ -13,16 +13,18 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:viewBindingIgnore="true">
 
         <Button
-            android:id="@+id/joinBtn"
+            android:id="@+id/joinBtnIntro"
             android:text="Join"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@color/mainColor"
             android:textColor="@color/white"
+
             />
 
         <Button

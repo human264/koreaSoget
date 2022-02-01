@@ -133,7 +133,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun getUserDataList(currentUserGender: String) {
-
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataModel in dataSnapshot.children) {
@@ -146,9 +145,6 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         usersDataList.add(user!!)
                     }
-
-
-
                 }
 
                 cardStackAdapter.notifyDataSetChanged()

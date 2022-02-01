@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.bokchi.sogating_final.utils.MyInfo
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -73,16 +74,16 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onCardSwiped(direction: Direction?) {
                 if(direction == Direction.Right){
-                    Toast.makeText(this@MainActivity, "rihgt", Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, usersDataList[userCount].uid.toString())
+//                    Toast.makeText(this@MainActivity, "rihgt", Toast.LENGTH_SHORT).show()
+//                    Log.d(TAG, usersDataList[userCount].uid.toString())
 
                     userLikeOtherUser(uid, usersDataList[userCount].uid.toString())
                 }
                 if(direction == Direction.Left) {
-                    Toast.makeText(this@MainActivity, "left", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@MainActivity, "left", Toast.LENGTH_SHORT).show()
                 }
 
-                userCount += 1
+                userCount = userCount + 1
 
                 if(userCount == usersDataList.count()) {
                     getUserDataList(currentUserGender)
@@ -109,18 +110,22 @@ class MainActivity : AppCompatActivity() {
         getMyUserData()
     }
 
-    private fun getMyUserData() {
+    private fun getMyUserData(){
 
-
-        val postListener = object: ValueEventListener {
+        val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                 Log.d(TAG, dataSnapshot.toString())
                 val data = dataSnapshot.getValue(UserDataModel::class.java)
 
                 Log.d(TAG, data?.gender.toString())
 
                 currentUserGender = data?.gender.toString()
-                getUserDataList(data?.gender.toString())
+
+                MyInfo.myNickname = data?.nickname.toString()
+
+                getUserDataList(currentUserGender)
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -132,22 +137,28 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun getUserDataList(currentUserGender: String) {
+    private fun getUserDataList(currentUserGender : String){
+
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                 for (dataModel in dataSnapshot.children) {
-                    Log.d(TAG, dataModel.toString())
 
                     val user = dataModel.getValue(UserDataModel::class.java)
 
                     if(user!!.gender.toString().equals(currentUserGender)) {
 
                     } else {
+
                         usersDataList.add(user!!)
+
                     }
+
                 }
 
                 cardStackAdapter.notifyDataSetChanged()
+
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -155,31 +166,37 @@ class MainActivity : AppCompatActivity() {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
             }
         }
-
         FirebaseRef.userInfoRef.addValueEventListener(postListener)
-    }
 
+    }
     // 유저의 좋아요를 표시하는 부분
-    // 데이터에서 값을 저장해야 하는데, 어떤 값을 저장할까?
-    // 나의 UID. 내가 좋아하는 사람의 UID
-    private fun userLikeOtherUser(myUid: String, otherUid: String) {
-            FirebaseRef.userLikeRef.child(myUid).child(otherUid).setValue("true")
+    // 데이터에서 값을 저장해야 하는데, 어떤 값을 저장할까...?
+    // 나의 uid, 내가 좋아요한 사람의 uid
+    private fun userLikeOtherUser(myUid : String, otherUid : String){
+
+        FirebaseRef.userLikeRef.child(myUid).child(otherUid).setValue("true")
+
         getOtherUserLikeList(otherUid)
     }
-
 
     private fun getOtherUserLikeList(otherUid: String) {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                // 여기 리스트안에서 나의 UID가 있는지 확인만 해주면 됨.
+                // 내가 좋아요한 사람(민지)의 좋아요 리스트를 불러와서
+                // 여기서 내 uid가 있는지 체크만 해주면 됨.
                 for (dataModel in dataSnapshot.children) {
-                    Log.e(TAG, dataModel.key.toString())
+
                     val likeUserKey = dataModel.key.toString()
-                    if(likeUserKey.equals(uid)) {
-                        Toast.makeText(this@MainActivity,"매칭 완료", Toast.LENGTH_SHORT).show()
+                    if(likeUserKey.equals(uid)){
+                        Toast.makeText(this@MainActivity, "매칭 완료", Toast.LENGTH_SHORT).show()
                         createNotificationChannel()
                         sendNotification()
                     }
+
                 }
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -188,7 +205,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         FirebaseRef.userLikeRef.child(otherUid).addValueEventListener(postListener)
+
+
     }
+
+    //Notification
 
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -206,7 +227,6 @@ class MainActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
     }
-
     private fun sendNotification(){
         var builder = NotificationCompat.Builder(this, "Test_Channel")
             .setSmallIcon(R.drawable.ic_launcher_background)
@@ -216,18 +236,17 @@ class MainActivity : AppCompatActivity() {
         with(NotificationManagerCompat.from(this)) {
             notify(123, builder.build())
         }
-
-
-
-
-
     }
 
 
 
 
 
-
-
-
 }
+
+
+
+
+
+
+

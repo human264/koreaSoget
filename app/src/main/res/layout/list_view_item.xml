@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/listViewItemNickNameArea"
         android:text="닉 네임 :"
         android:layout_margin="20sp"
         android:textSize="20sp"

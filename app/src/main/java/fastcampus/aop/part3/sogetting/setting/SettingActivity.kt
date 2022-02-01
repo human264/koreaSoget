@@ -9,6 +9,7 @@ import com.google.firebase.ktx.Firebase
 import fastcampus.aop.part3.sogetting.R
 import fastcampus.aop.part3.sogetting.auth.IntroActivity
 import fastcampus.aop.part3.sogetting.message.MyLikeListActivity
+import fastcampus.aop.part3.sogetting.message.MyMsgActivity
 
 class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,5 +39,15 @@ class SettingActivity : AppCompatActivity() {
             val intent = Intent(this, IntroActivity::class.java)
             startActivity(intent)
         }
+
+        val myMsg = findViewById<Button>(R.id.myMsg)
+        logoutBtn.setOnClickListener {
+            val intent = Intent(this, MyMsgActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
+
     }
 }

@@ -167,9 +167,7 @@ class MainActivity : AppCompatActivity() {
     // 데이터에서 값을 저장해야 하는데, 어떤 값을 저장할까?
     // 나의 UID. 내가 좋아하는 사람의 UID
     private fun userLikeOtherUser(myUid: String, otherUid: String) {
-
             FirebaseRef.userLikeRef.child(myUid).child(otherUid).setValue("true")
-
         getOtherUserLikeList(otherUid)
     }
 
@@ -179,24 +177,13 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataModel in dataSnapshot.children) {
                     Log.e(TAG, dataModel.key.toString())
-
                     val likeUserKey = dataModel.key.toString()
                     if(likeUserKey.equals(uid)) {
-
                         Toast.makeText(this@MainActivity,"매칭 완료", Toast.LENGTH_SHORT).show()
                         createNotificationChannel()
                         sendNotification()
-
-
-
-
                     }
-
-
-
-
                 }
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

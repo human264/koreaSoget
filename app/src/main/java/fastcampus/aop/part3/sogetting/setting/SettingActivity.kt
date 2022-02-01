@@ -8,6 +8,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import fastcampus.aop.part3.sogetting.R
 import fastcampus.aop.part3.sogetting.auth.IntroActivity
+import fastcampus.aop.part3.sogetting.message.MyLikeListActivity
 
 class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,19 +24,19 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val logoutBtn = findViewById<Button>(R.id.logOutBtn)
-        logoutBtn.setOnClickListener {
-
-            val auth = Firebase.auth
-            auth.signOut()
-
-            val intent = Intent(this, IntroActivity::class.java)
+        val myLikeBtn = findViewById<Button>(R.id.myLikeList)
+        myLikeBtn.setOnClickListener {
+            val intent = Intent(this, MyLikeListActivity::class.java)
             startActivity(intent)
-
-
         }
 
 
-
+        val logoutBtn = findViewById<Button>(R.id.logOutBtn)
+        logoutBtn.setOnClickListener {
+            val auth = Firebase.auth
+            auth.signOut()
+            val intent = Intent(this, IntroActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

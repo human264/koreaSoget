@@ -41,7 +41,7 @@ class SettingActivity : AppCompatActivity() {
         }
 
         val myMsg = findViewById<Button>(R.id.myMsg)
-        logoutBtn.setOnClickListener {
+        myMsg.setOnClickListener {
             val intent = Intent(this, MyMsgActivity::class.java)
             startActivity(intent)
         }

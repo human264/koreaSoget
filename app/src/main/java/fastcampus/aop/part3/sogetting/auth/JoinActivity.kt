@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -20,6 +21,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.ktx.storage
 import fastcampus.aop.part3.sogetting.MainActivity
 import fastcampus.aop.part3.sogetting.R
@@ -80,15 +82,34 @@ class JoinActivity : AppCompatActivity() {
                         uid = user?.uid.toString()
 
 
-                        var userModel = UserDataModel(uid, nickname, age, gender, city)
+                        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+                            OnCompleteListener { task ->
+                            if (!task.isSuccessful) {
+                                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                                return@OnCompleteListener
+                            }
 
-                        FirebaseRef.userInfoRef.child(uid).setValue(
-                            userModel
-                        )
+                            // Get new FCM registration token
+                            val token = task.result
 
-                        uploadImage(uid)
-                        val intent = Intent(this, MainActivity::class.java)
-                       startActivity(intent)
+                            // Log and toast
+                            Log.e(TAG, token.toString())
+
+                            var userModel = UserDataModel(uid, nickname, age, gender, city, token)
+
+                            FirebaseRef.userInfoRef.child(uid).setValue(
+                                userModel
+                            )
+
+                            uploadImage(uid)
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        })
+
+
+
+
+
 
 
                     } else {

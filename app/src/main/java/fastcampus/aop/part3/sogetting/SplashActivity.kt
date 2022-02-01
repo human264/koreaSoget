@@ -1,13 +1,14 @@
-package fastcampus.aop.part3.sogetting.auth
+package fastcampus.aop.part3.sogetting
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
-import fastcampus.aop.part3.sogetting.MainActivity
-import fastcampus.aop.part3.sogetting.R
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import fastcampus.aop.part3.sogetting.auth.IntroActivity
 import fastcampus.aop.part3.sogetting.utils.FirebaseAuthUtils
 
 class SplashActivity : AppCompatActivity() {
@@ -39,7 +40,18 @@ class SplashActivity : AppCompatActivity() {
             }, 3000)
         }
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
 
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            Log.e(TAG, token.toString())
+        })
 
 
 

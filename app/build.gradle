@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "fastcampus.aop.part3.sogetting"
-        minSdk 23
+        minSdk 27
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -42,10 +42,13 @@ apply plugin: 'com.google.gms.google-services'
 
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+
 
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -62,7 +65,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.github.bumptech.glide/annotations
     implementation group: 'com.github.bumptech.glide', name: 'annotations', version: '4.8.0'
-
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.2.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

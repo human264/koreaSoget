@@ -2,7 +2,6 @@ package fastcampus.aop.part3.sogetting.message
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.service.autofill.UserData
 import android.util.Log
 import android.widget.ListView
 import android.widget.Toast
@@ -11,8 +10,15 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import fastcampus.aop.part3.sogetting.R
 import fastcampus.aop.part3.sogetting.auth.UserDataModel
+import fastcampus.aop.part3.sogetting.message.fcm.NotiModel
+import fastcampus.aop.part3.sogetting.message.fcm.PushNotification
+import fastcampus.aop.part3.sogetting.message.fcm.RetrofitInstance
 import fastcampus.aop.part3.sogetting.utils.FirebaseAuthUtils
 import fastcampus.aop.part3.sogetting.utils.FirebaseRef
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 
 class MyLikeListActivity : AppCompatActivity() {
 
@@ -41,6 +47,13 @@ class MyLikeListActivity : AppCompatActivity() {
 //
 //            Log.d(TAG, likeUserList[position].uid.toString())
             checkMatching(likeUserList[position].uid.toString())
+
+            val notiModel = NotiModel("a", "b")
+
+            val pushModel = PushNotification(notiModel,
+                likeUserList[position].token.toString())
+
+            testPush(pushModel)
         }
     }
 
@@ -133,6 +146,16 @@ class MyLikeListActivity : AppCompatActivity() {
 
         FirebaseRef.userInfoRef.addValueEventListener(postListener)
     }
+
+    //PUSH
+
+    private fun testPush(notification : PushNotification)
+        = CoroutineScope(Dispatchers.IO).launch {
+
+            RetrofitInstance.api.postNotification(notification)
+
+    }
+
 
 
 }
